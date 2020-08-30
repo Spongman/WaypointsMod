@@ -111,14 +111,10 @@ public class WaypointsMod {
 		}
 	}
 
-	public static Set<Waypoint> getWaypoints() {
-		return waypoints;
-	}
-
 	public static void refreshWaypointsToRender() {
 		waypointsToRender.clear();
 
-		for (Waypoint waypoint : WaypointsMod.getWaypoints()) {
+		for (Waypoint waypoint : waypoints) {
 			if (waypoint.shouldRender()) {
 				waypointsToRender.add(waypoint);
 			}
@@ -129,4 +125,11 @@ public class WaypointsMod {
 		return waypointsToRender;
 	}
 
+	public static String getWorldName() {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc.isSingleplayer())
+			return mc.getIntegratedServer().getFolderName();
+		else
+			return mc.getCurrentServerData().serverIP;
+	}
 }

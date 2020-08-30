@@ -17,15 +17,9 @@ public class KeybindListener {
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
 		if (WaypointsMod.bindWaypointCreate.isPressed()) {
-			if (mc.isSingleplayer()) {
-				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You can only create waypoints in multiplayer!"));
-			} else {
-				mc.displayGuiScreen(new GuiScreenCreateWaypoint());
-			}
+			mc.displayGuiScreen(new GuiScreenCreateWaypoint());
 		} else if (WaypointsMod.bindWaypointMenu.isPressed()) {
-			for (Waypoint waypoint : WaypointsMod.getWaypoints()) {
-				if (waypoint.shouldRender()) {
-					mc.displayGuiScreen(new GuiScreenWaypointsMenu());
+			
 					return;
 				}
 			}

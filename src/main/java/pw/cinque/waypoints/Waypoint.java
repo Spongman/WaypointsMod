@@ -12,6 +12,12 @@ public class Waypoint {
 	private final String server;
 	private final int x, y, z;
 	private final int color;
+	
+	public Waypoint(String name) {
+		this.name = name;
+		world = server = null;
+		x = y = z = color = 0;
+	}
 
 	public Waypoint(String name, String world, String server, int x, int y, int z, int color) {
 		this.name = name;
@@ -52,8 +58,9 @@ public class Waypoint {
 	}
 
 	public boolean shouldRender() {
-		return !mc.isSingleplayer() && mc.theWorld.provider.getDimensionName().equals(world) && mc.getCurrentServerData().serverIP.equals(server);
-
+		if (world == null)
+			return false;
+		return world.equals(mc.theWorld.provider.getDimensionName()) && server.equals(WaypointsMod.getWorldName());
 	}
 
 	public double getDistance(Entity en) {
@@ -65,12 +72,20 @@ public class Waypoint {
 
 	@Override
 	public String toString() {
+		if (world == null)
+			return name;
 		return name + ";" + world + ";" + server + ";" + x + ";" + y + ";" + z + ";" + color;
 	}
 
 	public static Waypoint fromString(String string) {
-		String[] parts = string.split(";");
-		return new Waypoint(parts[0], parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]), Integer.valueOf(parts[5]), Integer.valueOf(parts[6]));
+		if (!string.startsWith("#") && !string.startsWith("//")) {
+			try {
+				String[] parts = string.split(";");
+				return new Waypoint(parts[0], parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]), Integer.valueOf(parts[5]), Integer.valueOf(parts[6]));
+			} catch (Throwable t) {
+			}
+		}
+		
+		return new Waypoint(string);
 	}
-
 }

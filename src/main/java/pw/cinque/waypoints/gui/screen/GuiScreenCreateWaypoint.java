@@ -75,9 +75,8 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 			this.coordsZ.textboxKeyTyped(character, index);
 		}
 		
-		for (Waypoint waypoint : WaypointsMod.getWaypoints()) {
-			if (waypoint.getName().equalsIgnoreCase(name.getText()) && waypoint.getServer().equalsIgnoreCase(mc.getCurrentServerData().serverIP)) {
-
+		for (Waypoint waypoint : WaypointsMod.getWaypointsToRender()) {
+			if (waypoint.getName().equalsIgnoreCase(name.getText())) {
 				this.create.enabled = false;
 				return;
 			}
