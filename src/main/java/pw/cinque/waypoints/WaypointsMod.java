@@ -40,7 +40,7 @@ public class WaypointsMod {
 	public static KeyBinding bindWaypointCreate = new KeyBinding("Create Waypoint", Keyboard.KEY_SEMICOLON, "Fyu's Waypoints");
 	public static KeyBinding bindWaypointMenu = new KeyBinding("Open Menu", Keyboard.KEY_GRAVE, "Fyu's Waypoints");
 
-	private static Set<Waypoint> waypoints = new HashSet<Waypoint>();
+	private static ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
 	private static ArrayList<Waypoint> waypointsToRender = new ArrayList<Waypoint>();
 
 	private static WaypointsMod instance;
