@@ -62,8 +62,11 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char character, int index) {		
-		if (index == Keyboard.KEY_ESCAPE) {
+	protected void keyTyped(char character, int index) {
+		if (index == Keyboard.KEY_NUMPADENTER || index == Keyboard.KEY_RETURN) {
+			if (this.create.enabled)
+				createWaypoint();
+		} else if (index == Keyboard.KEY_ESCAPE) {
 			mc.displayGuiScreen(null);
 		} else if (name.isFocused()) {
 			this.name.textboxKeyTyped(character, index);
@@ -74,7 +77,7 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 		} else if (coordsZ.isFocused()) {
 			this.coordsZ.textboxKeyTyped(character, index);
 		}
-		
+
 		for (Waypoint waypoint : WaypointsMod.getWaypointsToRender()) {
 			if (waypoint.getName().equalsIgnoreCase(name.getText())) {
 				this.create.enabled = false;
@@ -120,17 +123,7 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 			return;
 			
 		case 1:
-			String name = this.name.getText();
-			String world = mc.theWorld.provider.getDimensionName();
-			String server = mc.getCurrentServerData().serverIP;
-			int x = Integer.valueOf(coordsX.getText());
-			int y = Integer.valueOf(coordsY.getText());
-			int z = Integer.valueOf(coordsZ.getText());
-			int color = colorPicker.getSelectedColor();
-			
-			WaypointsMod.addWaypoint(new Waypoint(name, world, server, x, y, z, color));
-			mc.displayGuiScreen(null);
-			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Waypoint '" + name + "' created!"));
+			createWaypoint();
 			return;
 			
 		case 2:
