@@ -135,19 +135,19 @@ public class GuiScreenWaypointsMenu extends GuiScreen {
 		Comparator<Waypoint> comparator = null;
 		switch(this.sortOrder) {
 		case File:
-			sort.displayString = "File";
+			sort.displayString = "Sort: File";
 			break;
 		case Alpha:
 			comparator = new WaypointNameComparator();
-			sort.displayString = "Name";
+			sort.displayString = "Sort: Name";
 			break;
 		case Nearest:
 			comparator = new WaypointDistanceComparator(1, Minecraft.getMinecraft().getRenderViewEntity());
-			sort.displayString = "Near";
+			sort.displayString = "Sort: Near";
 			break;
 		case Farthest:
 			comparator = new WaypointDistanceComparator(-1, Minecraft.getMinecraft().getRenderViewEntity());
-			sort.displayString = "Far";
+			sort.displayString = "Sort: Far";
 			break;
 		}
 		if (comparator != null)
@@ -158,7 +158,7 @@ public class GuiScreenWaypointsMenu extends GuiScreen {
 	public void initGui() {
 		
 		this.buttonList.add(delete = new GuiButton(0, this.width / 2 - 150, this.height - 24, 99, 20, "Delete"));
-		this.buttonList.add(cancel = new GuiButton(1, this.width / 2 - 49, this.height - 24, 99, 20, "Cancel"));
+		this.buttonList.add(cancel = new GuiButton(1, this.width / 2 - 49, this.height - 24, 99, 20, "Close"));
 		this.buttonList.add(sort = new GuiButton(2, this.width / 2 + 51, this.height - 24, 99, 20, ""));
 
 		sortList();
