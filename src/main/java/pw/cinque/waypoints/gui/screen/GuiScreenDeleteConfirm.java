@@ -2,7 +2,6 @@ package pw.cinque.waypoints.gui.screen;
 
 import pw.cinque.waypoints.Waypoint;
 import pw.cinque.waypoints.WaypointsMod;
-import pw.cinque.waypoints.gui.GuiSlotWaypoints;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatComponentText;
@@ -27,7 +26,7 @@ public class GuiScreenDeleteConfirm extends GuiScreen {
 	@Override
 	public void drawScreen(int x, int y, float partialTicks) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(mc.fontRenderer, "Are you sure you want to delete waypoint '" + waypoint.getName() + "'?", this.width / 2, this.height / 2 - 12, 0xFFFFFF);
+		this.drawCenteredString(mc.fontRendererObj, "Are you sure you want to delete waypoint '" + waypoint.getName() + "'?", this.width / 2, this.height / 2 - 12, 0xFFFFFF);
 		super.drawScreen(x, y, partialTicks);
 	}
 

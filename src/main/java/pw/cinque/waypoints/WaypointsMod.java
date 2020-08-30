@@ -18,18 +18,15 @@ import org.lwjgl.input.Keyboard;
 
 import pw.cinque.waypoints.listener.KeybindListener;
 import pw.cinque.waypoints.listener.WorldListener;
-import pw.cinque.waypoints.render.EntityWaypoints;
-import pw.cinque.waypoints.render.WaypointRenderer;
-import scala.actors.threadpool.Arrays;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @Mod(name = WaypointsMod.NAME, modid = WaypointsMod.MOD_ID, version = WaypointsMod.VERSION)
 public class WaypointsMod {
@@ -38,8 +35,7 @@ public class WaypointsMod {
 	public static final String MOD_ID = "waypoints";
 	public static final String VERSION = "1.0-Beta";
 	
-	private static final File WAYPOINTS_FILE;
-	private static Minecraft mc = Minecraft.getMinecraft();
+	private File WAYPOINTS_FILE;
 
 	public static KeyBinding bindWaypointCreate = new KeyBinding("Create Waypoint", Keyboard.KEY_SEMICOLON, "Fyu's Waypoints");
 	public static KeyBinding bindWaypointMenu = new KeyBinding("Open Menu", Keyboard.KEY_GRAVE, "Fyu's Waypoints");
@@ -47,15 +43,18 @@ public class WaypointsMod {
 	private static Set<Waypoint> waypoints = new HashSet<Waypoint>();
 	private static ArrayList<Waypoint> waypointsToRender = new ArrayList<Waypoint>();
 
-	static {
+	private static WaypointsMod instance;
+
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+
+		instance = this;
+
 		File root = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "Fyu's Waypoints");
 		root.mkdir();
 
 		WAYPOINTS_FILE = new File(root, "waypoints");
-	}
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
 		ModMetadata metadata = event.getModMetadata();
 		metadata.version = VERSION;
 	}
@@ -79,9 +78,7 @@ public class WaypointsMod {
 
 		ClientRegistry.registerKeyBinding(bindWaypointCreate);
 		ClientRegistry.registerKeyBinding(bindWaypointMenu);
-
-		EntityRegistry.registerModEntity(EntityWaypoints.class, "Waypoint", 999, this, 1, 1, false);
-		RenderingRegistry.registerEntityRenderingHandler(EntityWaypoints.class, new WaypointRenderer());
+		
 
 		FMLCommonHandler.instance().bus().register(new KeybindListener());
 		MinecraftForge.EVENT_BUS.register(new WorldListener());
@@ -101,7 +98,7 @@ public class WaypointsMod {
 
 	private static void writeWaypointsToDisk() {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(WAYPOINTS_FILE));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(instance.WAYPOINTS_FILE));
 
 			for (Waypoint w : waypoints) {
 				writer.write(w.toString());

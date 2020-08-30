@@ -6,6 +6,8 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.math.NumberUtils;
 import org.lwjgl.input.Keyboard;
 
@@ -25,12 +27,12 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.name = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 48, 200, 20);
+		this.name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 48, 200, 20);
 		this.name.setFocused(true);
 
-		this.coordsX = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 10, 64, 20);
-		this.coordsY = new GuiTextField(this.fontRendererObj, this.width / 2 - 32, this.height / 2 - 10, 63, 20);
-		this.coordsZ = new GuiTextField(this.fontRendererObj, this.width / 2 + 35, this.height / 2 - 10, 64, 20);
+		this.coordsX = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 10, 64, 20);
+		this.coordsY = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 32, this.height / 2 - 10, 63, 20);
+		this.coordsZ = new GuiTextField(0, this.fontRendererObj, this.width / 2 + 35, this.height / 2 - 10, 64, 20);
 
 		this.buttonList.add(colorPicker = new GuiColorPicker(0, this.width / 2 - 101, this.height / 2 + 25, 202, 20));
 		this.buttonList.add(create = new GuiButton(1, this.width / 2 - 101, this.height / 2 + 50, 100, 20, "Create"));
@@ -74,13 +76,17 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 		}
 		
 		for (Waypoint waypoint : WaypointsMod.getWaypoints()) {
-			if (waypoint.getName().equalsIgnoreCase(name.getText()) && waypoint.getServer().equalsIgnoreCase(mc.func_147104_D().serverIP)) {
+			if (waypoint.getName().equalsIgnoreCase(name.getText()) && waypoint.getServer().equalsIgnoreCase(mc.getCurrentServerData().serverIP)) {
+
 				this.create.enabled = false;
 				return;
 			}
 		}
-		
-		this.create.enabled = name.getText().length() > 0 && NumberUtils.isDigits(coordsX.getText().replace("-", "")) && NumberUtils.isDigits(coordsY.getText().replace("-", "")) && NumberUtils.isDigits(coordsZ.getText().replace("-", ""));
+
+		this.create.enabled = name.getText().length() > 0
+				&& NumberUtils.isDigits(coordsX.getText().replace("-", ""))
+				&& NumberUtils.isDigits(coordsY.getText().replace("-", ""))
+				&& NumberUtils.isDigits(coordsZ.getText().replace("-", ""));
 	}
 
 	@Override
@@ -89,6 +95,22 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 		this.coordsX.updateCursorCounter();
 		this.coordsY.updateCursorCounter();
 		this.coordsZ.updateCursorCounter();
+	}
+
+	protected void createWaypoint() {
+		String name = this.name.getText();
+		String world = mc.theWorld.provider.getDimensionName();
+		String server = WaypointsMod.getWorldName();
+		int x = Integer.valueOf(coordsX.getText());
+		int y = Integer.valueOf(coordsY.getText());
+		int z = Integer.valueOf(coordsZ.getText());
+		int color = colorPicker.getSelectedColor();
+
+		Waypoint wp = new Waypoint(name, world, server, x, y, z, color);
+		WaypointsMod.addWaypoint(wp);
+		mc.displayGuiScreen(null);
+		mc.thePlayer
+				.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Waypoint '" + name + "' created!"));
 	}
 
 	@Override
@@ -101,7 +123,7 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 		case 1:
 			String name = this.name.getText();
 			String world = mc.theWorld.provider.getDimensionName();
-			String server = mc.func_147104_D().serverIP;
+			String server = mc.getCurrentServerData().serverIP;
 			int x = Integer.valueOf(coordsX.getText());
 			int y = Integer.valueOf(coordsY.getText());
 			int z = Integer.valueOf(coordsZ.getText());
@@ -119,7 +141,7 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int x, int y, int key) {
+	protected void mouseClicked(int x, int y, int key) throws IOException {
 		super.mouseClicked(x, y, key);
 		this.name.mouseClicked(x, y, key);
 		this.coordsX.mouseClicked(x, y, key);

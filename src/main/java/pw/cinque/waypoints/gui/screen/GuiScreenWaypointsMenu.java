@@ -1,5 +1,6 @@
 package pw.cinque.waypoints.gui.screen;
 
+import java.io.IOException;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -49,6 +50,11 @@ public class GuiScreenWaypointsMenu extends GuiScreen {
 			mc.displayGuiScreen(null);
 			return;
 		}
+	
+	@Override
+	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		this.waypointsList.handleMouseInput();
 	}
 
 	@Override

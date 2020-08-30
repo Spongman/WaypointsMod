@@ -7,8 +7,8 @@ import pw.cinque.waypoints.Waypoint;
 import pw.cinque.waypoints.WaypointsMod;
 import pw.cinque.waypoints.gui.screen.GuiScreenCreateWaypoint;
 import pw.cinque.waypoints.gui.screen.GuiScreenWaypointsMenu;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class KeybindListener {
 
