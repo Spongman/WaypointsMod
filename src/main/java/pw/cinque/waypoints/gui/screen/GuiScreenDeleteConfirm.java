@@ -35,8 +35,8 @@ public class GuiScreenDeleteConfirm extends GuiScreen {
 		switch (button.id) {
 		case 0:
 			WaypointsMod.removeWaypoint(waypoint);
-			mc.displayGuiScreen(null);
 			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Waypoint '" + waypoint.getName() + "' removed!"));
+			mc.displayGuiScreen(parent);
 			return;
 			
 		case 1:

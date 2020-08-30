@@ -7,12 +7,13 @@ public class Waypoint {
 
 	private static Minecraft mc = Minecraft.getMinecraft();
 
-	private final String name;
 	private final String world;
 	private final String server;
-	private final int x, y, z;
-	private final int color;
-	
+
+	private String name;
+	private int x, y, z;
+	private int color;
+
 	public Waypoint(String name) {
 		this.name = name;
 		world = server = null;
@@ -55,6 +56,26 @@ public class Waypoint {
 
 	public int getColor() {
 		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void setZ(int z) {
+		this.z = z;
 	}
 
 	public boolean shouldRender() {

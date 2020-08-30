@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import pw.cinque.waypoints.Waypoint;
 import pw.cinque.waypoints.WaypointsMod;
+import pw.cinque.waypoints.gui.screen.GuiScreenCreateWaypoint;
 import pw.cinque.waypoints.gui.screen.GuiScreenDeleteConfirm;
 import pw.cinque.waypoints.gui.screen.GuiScreenWaypointsMenu;
 
@@ -44,7 +45,7 @@ public class GuiSlotWaypoints extends GuiSlot {
 
 		if (doubleClicked) {
 			Waypoint waypoint = WaypointsMod.getWaypointsToRender().get(selectedIndex);
-			mc.displayGuiScreen(new GuiScreenDeleteConfirm(parent, waypoint));
+			mc.displayGuiScreen(new GuiScreenCreateWaypoint(parent, waypoint));
 		}
 	}
 

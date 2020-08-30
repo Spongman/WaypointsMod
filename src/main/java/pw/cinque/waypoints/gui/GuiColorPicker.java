@@ -55,5 +55,14 @@ public class GuiColorPicker extends GuiButton {
 	public int getSelectedColor() {
 		return COLORS[colorIndex];
 	}
+	
+	public void setColor(int color) {
+		for (int index = 0; index < COLORS.length; index++) {
+			if (COLORS[index] == color) {
+				this.colorIndex = index;
+				return;
+			}
+		}
+	}
 
 }
