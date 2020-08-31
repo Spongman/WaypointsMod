@@ -27,7 +27,7 @@ public class GuiScreenCreateWaypoint extends GuiScreen {
 	private GuiButton cancel;
 	private final GuiScreen parentScreen;
 	private final Waypoint waypoint;
-	private final ArrayList<GuiTextField> textFields = new ArrayList<>();
+	private final ArrayList<GuiTextField> textFields = new ArrayList<GuiTextField>();
 	private final IWaypointRepository waypoints;
 
 	public GuiScreenCreateWaypoint(IWaypointRepository waypoints, GuiScreen parentScreen, Waypoint waypoint) {

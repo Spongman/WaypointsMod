@@ -27,8 +27,8 @@ public class WaypointsMod implements IWaypointRepository {
 
 	private File WAYPOINTS_FILE;
 
-	private static ArrayList<Waypoint> waypoints = new ArrayList<>();
-	private static ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
+	private static ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+	private static ArrayList<Waypoint> waypointsToRender = new ArrayList<Waypoint>();
 
 	private static WaypointsMod instance;
 
