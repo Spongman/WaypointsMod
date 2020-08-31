@@ -2,13 +2,12 @@ package pw.cinque.waypoints.gui;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiColorPicker extends GuiButton {
 
@@ -17,52 +16,49 @@ public class GuiColorPicker extends GuiButton {
 	 */
 	private static final int[] COLORS = { 0xFFCF000F, 0xFFF22613, 0xFFDB0A5B, 0xFF9B59B6, 0xFF3A539B, 0xFF59ABE3, 0xFF1F3A93, 0xFF1BA39C, 0xFF3FC380, 0xFFE9D460, 0xFFF9690E };
 	private int colorIndex;
-	
+
 	public GuiColorPicker(int id, int x, int y, int width, int height) {
 		super(id, x, y, width, height, "");
-		this.colorIndex = new Random().nextInt(COLORS.length - 1);
+		colorIndex = new Random().nextInt(COLORS.length - 1);
 	}
 
 	@Override
 	public void drawButton(Minecraft mc, int x, int y) {
-		if (!this.visible) {
+		if (!visible)
 			return;
-		}
 
-		FontRenderer fontrenderer = mc.fontRendererObj;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition + this.width && y < this.yPosition + this.height;
-		int hoverState = this.getHoverState(this.hovered);
+		hovered = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
+		getHoverState(hovered);
 
 		GL11.glEnable(GL11.GL_BLEND);
 		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		Gui.drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 0xFFA0A0A0);
-		Gui.drawRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + this.width - 1, this.yPosition + this.height - 1, getSelectedColor());
+		Gui.drawRect(xPosition, yPosition, xPosition + width, yPosition + height, 0xFFA0A0A0);
+		Gui.drawRect(xPosition + 1, yPosition + 1, xPosition + width - 1, yPosition + height - 1, getSelectedColor());
 
-		this.mouseDragged(mc, x, y);
+		mouseDragged(mc, x, y);
 	}
-	
+
 	public void nextColor() {
 		colorIndex++;
-		
+
 		if (colorIndex == COLORS.length) {
 			colorIndex = 0;
 		}
 	}
-	
+
 	public int getSelectedColor() {
 		return COLORS[colorIndex];
 	}
-	
+
 	public void setColor(int color) {
-		for (int index = 0; index < COLORS.length; index++) {
+		for (int index = 0; index < COLORS.length; index++)
 			if (COLORS[index] == color) {
-				this.colorIndex = index;
+				colorIndex = index;
 				return;
 			}
-		}
 	}
 
 }

@@ -2,6 +2,7 @@ package pw.cinque.waypoints;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import pw.cinque.waypoints.listener.WorldListener;
 
 public class Waypoint {
 
@@ -81,13 +82,13 @@ public class Waypoint {
 	public boolean shouldRender() {
 		if (world == null)
 			return false;
-		return world.equals(mc.theWorld.provider.getDimensionName()) && server.equals(WaypointsMod.getWorldName());
+		return world.equals(mc.theWorld.provider.getDimensionName()) && server.equals(WorldListener.getWorldName());
 	}
 
 	public double getDistance(Entity en) {
-		double x = this.x - en.posX;
-		double y = this.y - en.posY;
-		double z = this.z - en.posZ;
+		final double x = this.x - en.posX;
+		final double y = this.y - en.posY;
+		final double z = this.z - en.posZ;
 		return Math.sqrt(x * x + y * y + z * z);
 	}
 
@@ -101,12 +102,12 @@ public class Waypoint {
 	public static Waypoint fromString(String string) {
 		if (!string.startsWith("#") && !string.startsWith("//")) {
 			try {
-				String[] parts = string.split(";");
+				final String[] parts = string.split(";");
 				return new Waypoint(parts[0], parts[1], parts[2], Integer.valueOf(parts[3]), Integer.valueOf(parts[4]), Integer.valueOf(parts[5]), Integer.valueOf(parts[6]));
-			} catch (Throwable t) {
+			} catch (final Throwable t) {
 			}
 		}
-		
+
 		return new Waypoint(string);
 	}
 }
