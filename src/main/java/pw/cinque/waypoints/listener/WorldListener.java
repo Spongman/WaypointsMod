@@ -76,8 +76,8 @@ public class WorldListener {
 			final float y = wp.getY() - py;
 			final float z = wp.getZ() - pz;
 
-			final double d0 = renderManager.getDistanceToCamera(x, y, z);
-			if (d0 < maxDistance) {
+			final double d0 = x * x + y * y + z * z;
+			if (d0 > maxDistance * maxDistance) {
 				continue;
 			}
 
@@ -96,7 +96,7 @@ public class WorldListener {
 			GlStateManager.scale(-f1, -f1, f1);
 			GlStateManager.depthMask(false);
 			GlStateManager.disableDepth();
-			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+			GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 			GlStateManager.disableTexture2D();
 			worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
 			worldrenderer.pos(-(halfWidth + 1), -1, 0.0D).color(0.2F, 0.2F, 0.2F, 0.4F).endVertex();
