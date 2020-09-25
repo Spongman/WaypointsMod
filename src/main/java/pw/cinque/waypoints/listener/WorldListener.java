@@ -81,7 +81,7 @@ public class WorldListener {
 				continue;
 			}
 
-			final String str = wp.getName();
+			final String str = wp.getName() + " [" + ((int) Math.sqrt(d0)) + "m]";
 			final float width = fontrenderer.getStringWidth(str);
 			final float halfWidth = width / 2;
 			final int color = wp.getColor();
