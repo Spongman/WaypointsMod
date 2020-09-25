@@ -67,9 +67,10 @@ public class KeybindListener {
 			}
 
 			if (closest != null) {
-				waypoints.removeWaypoint(closest);
+				final String name = closest.getName();
+				waypoints.hideWaypoint(closest);
 
-				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Removed waypoint " + closest.getName()));
+				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Removed waypoint " + name));
 
 				if (nextClosest != null) {
 					mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Next closest is " + nextClosest.getName()));

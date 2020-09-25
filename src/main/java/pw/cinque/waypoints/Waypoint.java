@@ -6,9 +6,9 @@ import pw.cinque.waypoints.listener.WorldListener;
 
 public class Waypoint {
 
-	private static Minecraft mc = Minecraft.getMinecraft();
+	private final Minecraft mc = Minecraft.getMinecraft();
 
-	private final String world;
+	private String world;
 	private final String server;
 
 	private String name;
@@ -90,6 +90,13 @@ public class Waypoint {
 		final double y = this.y - en.posY;
 		final double z = this.z - en.posZ;
 		return Math.sqrt(x * x + y * y + z * z);
+	}
+	
+	public void delete() {
+		if (world != null) {
+			this.name = "//" + this.toString();
+			this.world = null;
+		}
 	}
 
 	@Override

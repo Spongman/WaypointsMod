@@ -80,6 +80,14 @@ public class WaypointsMod implements IWaypointRepository {
 		refreshWaypointsToRender();
 		writeWaypointsToDisk();
 	}
+	
+	@Override
+	public void hideWaypoint(Waypoint waypoint) {
+		waypoint.delete();
+		refreshWaypointsToRender();
+		writeWaypointsToDisk();
+	}
+
 
 	private static void writeWaypointsToDisk() {
 		try {

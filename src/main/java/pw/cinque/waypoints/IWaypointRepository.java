@@ -6,6 +6,7 @@ public interface IWaypointRepository {
 	void addWaypoint(Waypoint waypoint);
 
 	void removeWaypoint(Waypoint waypoint);
+	void hideWaypoint(Waypoint waypoint);
 
 	void refreshWaypointsToRender();
 
